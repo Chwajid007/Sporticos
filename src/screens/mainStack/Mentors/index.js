@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView, View, FlatList } from "react-native";
+import { StyleSheet, SafeAreaView, View, FlatList, ScrollView } from "react-native";
 import React, { useState } from "react";
 import { Color, FontFamily } from "../../../theme";
 import CustomHeader from "../../../components/CustomHeader";
@@ -10,7 +10,7 @@ import MentorProfile from "./molecules/MentorProfile";
 import MentorLikeCard from "./molecules/MentorLikeCard";
 import Pagination from "../../../components/Pagination";
 
-const Mentors = ({navigation}) => {
+const Mentors = ({ navigation }) => {
   const [selectedCat, setSelectedCat] = useState(0);
   const catgeroyData = [
     {
@@ -40,9 +40,9 @@ const Mentors = ({navigation}) => {
   ];
   return (
     <SafeAreaView style={styles.parent}>
-      <View style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <CustomHeader
-          onPress={()=> navigation.goBack()}
+          onPress={() => navigation.goBack()}
           headerTitle={
             <CustomText
               label={"Mentors"}
@@ -127,8 +127,9 @@ const Mentors = ({navigation}) => {
             }}
           />
         </View>
-        <Pagination totalPages={4} />
-      </View>
+      </ScrollView>
+      <Pagination totalPages={4} />
+
     </SafeAreaView>
   );
 };
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
   parent: {
     flex: 1,
     backgroundColor: Color.white,
-    marginTop: 40,
+   // marginTop: 40,
   },
   container: {
     paddingHorizontal: 20,

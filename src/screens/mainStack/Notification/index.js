@@ -5,7 +5,7 @@ import CustomHeader from "../../../components/CustomHeader";
 import CustomText from "../../../components/CustomText";
 import NotificationRow from "./molecules/NotificationRow";
 
-const Notification = ({navigation}) => {
+const Notification = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.parent}>
       <View style={styles.container}>

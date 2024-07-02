@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
+    marginBottom: 10,
     elevation: 5,
-    marginRight: 20,
+    marginRight: 25,
   },
 });

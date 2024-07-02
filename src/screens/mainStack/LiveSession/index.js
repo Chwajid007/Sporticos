@@ -48,7 +48,7 @@ const LiveSession = ({ navigation }) => {
       <View style={styles.container}>
         <CustomHeader
           marginBottom={20}
-          onPress={()=>navigation.goBack()}
+          onPress={() => navigation.goBack()}
           headerTitle={
             <CustomText
               label={"Live Sessions"}
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   parent: {
     flex: 1,
     backgroundColor: Color.white,
-    marginTop: 40,
+    //marginTop: 40,
   },
   container: {
     paddingHorizontal: 20,

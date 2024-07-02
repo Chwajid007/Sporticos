@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { Color, FontFamily, FontSize } from "../../../../theme";
+import { Color, FontFamily, FontSize, images } from "../../../../theme";
 import CustomText from "../../../../components/CustomText";
 
-const PaymentCard = ({ headerLabel, Price }) => {
+const PaymentCard = ({ headerLabel, Price, selected, onPress }) => {
   return (
-    <View style={styles?.parent}>
+    <TouchableOpacity style={styles?.parent} onPress={onPress}>
       <View
         style={{
           height: 30,
@@ -42,8 +42,19 @@ const PaymentCard = ({ headerLabel, Price }) => {
           marginTop={3}
           color={Color?.grey}
         />
+        {selected &&
+        <Image
+          source={images.Check}
+          style={{
+            height: 20,
+            width: 20,
+            resizeMode: "contain",
+            marginTop: 10,
+          }}
+        />
+        }
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -21,7 +21,10 @@ const TermCondtion = ({ navigation }) => {
           }
           rightIcon={<View />}
         />
-        <ScrollView style={{marginBottom:50}} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={{ marginBottom: 50 }}
+          showsVerticalScrollIndicator={false}
+        >
           <CustomText
             label={"Terms of Use for Sporticos App"}
             fontSize={16}
@@ -155,7 +158,7 @@ const TermCondtion = ({ navigation }) => {
             fontSize={16}
             lineHeight={19}
             color={Color.black20}
-            textStyle={{textTransform:"lowercase"}}
+            textStyle={{ textTransform: "lowercase" }}
           />
           <CustomText
             label={"6. Limitation of Liability:"}
@@ -167,7 +170,7 @@ const TermCondtion = ({ navigation }) => {
             label={`SPORTICOS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, USE, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF OR IN CONNECTION WITH YOUR ACCESS TO OR USE OF THE SPORTICOS APP.`}
             fontSize={16}
             lineHeight={19}
-            textStyle={{textTransform:"lowercase"}}
+            textStyle={{ textTransform: "lowercase" }}
             color={Color.black20}
           />
           <CustomText

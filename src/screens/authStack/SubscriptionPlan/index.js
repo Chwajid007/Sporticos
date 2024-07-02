@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import React, { useState } from "react";
 import CustomHeader from "../../../components/CustomHeader";
 import CustomText from "../../../components/CustomText";
@@ -9,6 +9,7 @@ import CustomButton from "../../../components/CustomButton";
 import PaymentModel from "./molecules/PaymentModel";
 
 const SubscriptionPlan = ({ navigation }) => {
+  const [selectedPlan, setSelectedPlan] = useState(1);
   const [paymentModel, setPaymentModel] = useState(false);
   const textRow = [
     {
@@ -17,15 +18,34 @@ const SubscriptionPlan = ({ navigation }) => {
     },
     {
       id: 1,
-      label: "1 hour career coaching expert ",
+      label: "Personal social media management (handled external to the app)",
     },
     {
       id: 2,
-      label: "Personal social media management (handled external to the app)",
+      label: "1 hour career coaching expert ",
+    },
+    {
+      id: 3,
+      label: "1 hour nutrition expert",
+    },
+    {
+      id: 4,
+      label: "1 hour mental performance",
     },
   ];
+
+  const filteredRowData = textRow.filter((item) => {
+    if (selectedPlan === 0) {
+      return item?.id >= 0 && item?.id <= 1;
+    } else if (selectedPlan === 1) {
+      return item?.id >= 0 && item?.id <= 2;
+    } else {
+      return true;
+    }
+  });
   return (
     <SafeAreaView style={styles.parent}>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <CustomHeader onPress={() => navigation.goBack()} />
         <CustomText
@@ -51,21 +71,33 @@ const SubscriptionPlan = ({ navigation }) => {
             marginVertical: 40,
           }}
         >
-          {[1, 2, 3].map((item) => {
-            return <PaymentCard headerLabel={"Tactical Tier"} Price={"$400"} />;
-          })}
+          {["Tactical Tier", "Career Tier", "Mastery Tier"].map(
+            (item, index) => {
+              return (
+                <PaymentCard
+                  headerLabel={item}
+                  Price={index === 1 ? "$750" : index === 2 ? "$1000" : "$400"}
+                  selected={selectedPlan === index}
+                  onPress={() => setSelectedPlan(index)}
+                />
+              );
+            }
+          )}
         </View>
         <View style={{ paddingLeft: 40 }}>
-          {textRow.map((item) => {
+          {filteredRowData.map((item) => {
             return <RowText label={item?.label} key={item?.id} />;
           })}
         </View>
-
-        <CustomButton
-          marginTop={130}
+      </View>
+      </ScrollView>
+      <CustomButton
+          marginTop={20}
           title={"Get this plan"}
           color={Color?.white}
           onPress={() => setPaymentModel(true)}
+          width={"90%"}
+          alignSelf={"center"}
         />
         <CustomText
           label={"Skip this step"}
@@ -73,12 +105,11 @@ const SubscriptionPlan = ({ navigation }) => {
           alignSelf={"center"}
           marginTop={25}
           fontSize={15}
-          onPress={()=> navigation.navigate("Drawer")}
+          onPress={() => navigation.navigate("Drawer")}
           color={Color?.black20}
           fontFamily={FontFamily.barlowBold}
           textDecorationLine={"underline"}
         />
-      </View>
       <PaymentModel
         visible={paymentModel}
         onPress={() => setPaymentModel(false)}

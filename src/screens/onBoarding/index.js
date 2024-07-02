@@ -109,7 +109,7 @@ const OnboardingSlider = ({ navigation }) => {
               styles.dot,
               {
                 backgroundColor:
-                  index === activeSlide ? Color.yellowPrim : Color.black,
+                activeSlide === index || activeSlide === index + 1  ||  activeSlide === index + 2 ? Color.black : Color.yellowPrim,
               },
             ]}
           />

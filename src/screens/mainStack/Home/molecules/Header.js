@@ -3,8 +3,10 @@ import React from "react";
 import { Color, FontFamily, images } from "../../../../theme";
 import CustomText from "../../../../components/CustomText";
 import Icons from "../../../../components/Icons";
+import { useNavigation } from "@react-navigation/native";
 
 const Header = ({ search, SearchIconPress, notificationPress }) => {
+  const navigation = useNavigation();
   return (
     <View
       style={{
@@ -22,6 +24,7 @@ const Header = ({ search, SearchIconPress, notificationPress }) => {
             borderRadius: 15,
             resizeMode: "contain",
           }}
+          onMagicTap={() => navigation.openDrawer()}
         />
         <View style={{ marginLeft: 15 }}>
           <CustomText

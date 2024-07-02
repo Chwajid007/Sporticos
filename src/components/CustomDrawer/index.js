@@ -14,7 +14,13 @@ const CustomDrawer = (props) => {
 
   const drawerData = [
     ...(!isMentor
-      ? [{ name: "Subscription", icon: icons.dollar, screen: "SubscriptionScreen" }]
+      ? [
+          {
+            name: "Subscription",
+            icon: icons.dollar,
+            screen: "SubscriptionScreen",
+          },
+        ]
       : []),
     { name: "My Account", icon: icons.myAccount, screen: "EditProfile" },
     { name: "Support", icon: icons.support, screen: "Support" },

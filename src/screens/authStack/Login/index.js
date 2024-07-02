@@ -5,11 +5,12 @@ import CustomHeader from "../../../components/CustomHeader";
 import CustomText from "../../../components/CustomText";
 import CustomInput from "../../../components/CustomInput";
 import CustomButton from "../../../components/CustomButton";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Login = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.parent}>
-      <View style={styles.container}>
+      <KeyboardAwareScrollView style={styles.container}>
         <CustomHeader onPress={() => navigation.goBack()} />
         <Image source={images.Logo} style={styles.HeaderImage} />
         <CustomText
@@ -73,7 +74,7 @@ const Login = ({ navigation }) => {
             fontFamily={FontFamily.barlowBold}
           />
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };
