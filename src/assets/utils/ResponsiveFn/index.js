@@ -1,3 +1,4 @@
+import React from 'react';
 import {StatusBar, PixelRatio, Dimensions, Platform} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 const {height, width} = Dimensions.get('window');
@@ -21,4 +22,8 @@ export function getFontSize(font) {
     : height;
   const deviceHeightPercent = (font * deviceHeight) / 100;
   return Math.round(deviceHeightPercent);
+}
+export const useForceUpdate = () => {
+  const [, updateState] = React.useState();
+  return React.useCallback(() => updateState({}), []);
 }

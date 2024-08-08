@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 
 const CustomDrawer = (props) => {
   const isFocused = useIsFocused();
-  const { userType } = useSelector((state) => state.user);
+  const { userType } = useSelector((state) => state);
   const isMentor = userType === "mentor";
 
   const drawerData = [

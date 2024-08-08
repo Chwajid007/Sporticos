@@ -1,16 +1,25 @@
 import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Color, images } from "../../../theme";
 import CustomButton from "../../../components/CustomButton";
 import CustomText from "../../../components/CustomText";
 import { useDispatch } from "react-redux";
-import { setUserType } from "../../../redux/reducer/userReducer";
+import { setUserType } from "../../../redux/reducer/authSlice";
+import { useFocusEffect } from "@react-navigation/native";
 
-const AuthSelction = ({ navigation }) => {
+const AuthSelction = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const onUserSelect = (type) => {
     dispatch(setUserType(type));
   };
+  const [press, setPress] = useState(false);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setPress(false);
+    }, [])
+  );
+
   return (
     <SafeAreaView style={styles.parent}>
       <View style={styles.container}>
@@ -18,29 +27,54 @@ const AuthSelction = ({ navigation }) => {
         <CustomButton
           backgroundColor={"transparent"}
           borderColor={Color.greyLight}
-          title={"Register as Mentor"}
+          title={press ? "Login as Mentor" : "Register as Mentor"}
           color={Color?.greyLight}
           onPress={() => {
-            navigation.navigate("SignUp");
+            press
+              ? navigation.navigate("Login")
+              : navigation.navigate("SignUp");
             onUserSelect("mentor");
           }}
         />
         <CustomButton
           marginTop={30}
-          title={"Register as Athlete"}
+          title={press ? "Login as Athlete" : "Register as Athlete"}
           onPress={() => {
-            navigation.navigate("SignUp");
+            press
+              ? navigation.navigate("Login")
+              : navigation.navigate("SignUp");
             onUserSelect("athlete");
           }}
         />
       </View>
-      <View style={{ flex: 1, justifyContent: "flex-end" }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "flex-end",
+          flexDirection: "row",
+        }}
+      >
         <CustomText
-          label={"Have an account? Log in"}
+          label={"Have an account? "}
           alignSelf={"center"}
-          fontSize={14}
+          fontSize={16}
           color={Color?.greyLight}
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => {
+            navigation.navigate("AuthSelction");
+            setPress(true);
+          }}
+        />
+        <CustomText
+          label={"Log in"}
+          alignSelf={"center"}
+          fontSize={16}
+          color={Color?.black}
+          onPress={() => {
+            navigation.navigate("AuthSelction");
+            setPress(true);
+          }}
+          fontWeight={"bold"}
         />
       </View>
     </SafeAreaView>

@@ -65,6 +65,7 @@ export const Color = {
   white: "#FFFFFF",
   white10: "#F5F5F5",
   white20: "#F3F4F6",
+  textInputBorderColor: '#DADADA',
 
   black: "#000000",
   black10: "#191919",

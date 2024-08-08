@@ -20,6 +20,7 @@ const CustomText = ({
   textAlign,
   width,
   numberOfLines,
+  fontWeight,
 }) => {
   return (
     <TouchableOpacity
@@ -44,6 +45,7 @@ const CustomText = ({
             textDecorationLine: textDecorationLine,
             textAlign: textAlign,
             width: width,
+            fontWeight: fontWeight,
           },
         ]}
         numberOfLines={numberOfLines}

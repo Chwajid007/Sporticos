@@ -1,13 +1,56 @@
-import { SafeAreaView, StyleSheet, Image, View } from "react-native";
-import React from "react";
+import { SafeAreaView, StyleSheet, Image, View, Keyboard } from "react-native";
+import React, { useRef, useState } from "react";
 import { Color, FontFamily, images } from "../../../theme";
 import CustomHeader from "../../../components/CustomHeader";
 import CustomText from "../../../components/CustomText";
 import CustomInput from "../../../components/CustomInput";
 import CustomButton from "../../../components/CustomButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useDispatch, useSelector } from "react-redux";
+import { validateFields } from "../../../utils/Validations/validateFields";
+import { doLogin } from "../../../redux/reducer/authSlice";
+import { setLoader } from "../../../redux/reducer/appSliceReducer";
+import validator from "../../../utils/Validations/validator";
 
 const Login = ({ navigation }) => {
+  const { userType } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const [inputs, setInputs] = useState({
+    email: "",
+    password: "",
+
+    emailError: "",
+    passwordError: "",
+  });
+
+  const inputRefs = {
+    email: useRef(null),
+    password: useRef(null),
+  };
+
+  const changeHandler = (type, value) =>
+    setInputs({ ...inputs, [type]: value });
+
+  const doNext = async () => {
+    Keyboard.dismiss();
+    dispatch(setLoader(true));
+    const emailError = await validator("email", inputs.email);
+    const passwordError = await validator("password", inputs.password);
+    if (!emailError && !passwordError) {
+      const body = {
+        role: userType,
+        email: inputs.email,
+        password: inputs.password,
+      };
+      console.log('body',body)
+      dispatch(doLogin(body));
+    } else {
+      dispatch(setLoader(false));
+      console.log("hiiiii");
+      setInputs({ ...inputs, emailError, passwordError });
+    }
+  };
+
   return (
     <SafeAreaView style={styles.parent}>
       <KeyboardAwareScrollView style={styles.container}>
@@ -23,11 +66,44 @@ const Login = ({ navigation }) => {
           placeholder={"Enter Your Email"}
           iconName={true}
           HeaderLabel={"Email address"}
+          keyboardType="email-address"
+          onChangeText={(value) => {
+            changeHandler("email", value);
+          }}
+          onFocus={() => setInputs({ ...inputs, emailError: "" })}
+          isError={inputs.emailError}
+          onBlur={() => {
+            validateFields(inputs.email, "email", (error) => {
+              setInputs({ ...inputs, emailError: error });
+            });
+          }}
+          onSubmitEditing={() => {
+            console.log("onSubmitEditing for Email Input");
+
+            inputRefs.password.current?.focusRef();
+          }}
+          //blurOnSubmit={false}
+          errorMessage={inputs.emailError}
+          ref={inputRefs.email}
+          returnKeyType={"next"}
         />
         <CustomInput
           placeholder={"*******"}
           secureTextEntry={true}
           HeaderLabel={"Password"}
+          isError={inputs.passwordError}
+          onChangeText={(value) => {
+            changeHandler("password", value);
+          }}
+          onFocus={() => setInputs({ ...inputs, passwordError: "" })}
+          onBlur={() => {
+            validateFields(inputs.password, "password", (error) => {
+              setInputs({ ...inputs, passwordError: error });
+            });
+          }}
+          onSubmitEditing={doNext}
+          blurOnSubmit={false}
+          errorMessage={inputs.passwordError}
         />
         <CustomText
           label={"Forgot Password?"}
@@ -37,7 +113,7 @@ const Login = ({ navigation }) => {
           onPress={() => navigation.navigate("ForgetPassword")}
         />
         <CustomButton
-          onPress={() => navigation.navigate("Drawer")}
+          onPress={() => doNext()}
           marginTop={15}
           title={"Login"}
           color={Color?.white}
