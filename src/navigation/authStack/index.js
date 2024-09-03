@@ -37,13 +37,13 @@ const AuthStack = () => {
       <Stack.Screen name="OnBoarding" component={Onboarding} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
-      <Stack.Screen name="Home" component={Home} />
+      {/* <Stack.Screen name="Home" component={Home} /> */}
       <Stack.Screen name="Calender" component={Calender} />
       <Stack.Screen name="Otp" component={Otp} />
       <Stack.Screen name="ProfilePhoto" component={ProfilePhoto} />
       <Stack.Screen name="SubscriptionPlan" component={SubscriptionPlan} />
-      <Stack.Screen name="Drawer" component={DrawerNavigator} />
-      <Stack.Screen name="Notification" component={Notification} />
+      {/* <Stack.Screen name="Drawer" component={DrawerNavigator} />
+      <Stack.Screen name="Notification" component={Notification} /> */}
     </Stack.Navigator>
   );
 };

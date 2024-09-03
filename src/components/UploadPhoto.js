@@ -29,6 +29,7 @@ const UploadPhoto = ({visible, onChange, setImageModal}) => {
     try {
       const result = await openCamera(options);
       onChange(result);
+      setImageModal(false);
     } catch (error) {
       console.log('takePhotoFromCamera error', error);
     }
@@ -38,6 +39,7 @@ const UploadPhoto = ({visible, onChange, setImageModal}) => {
     try {
       const result = await openPicker(options);
       onChange(result);
+      setImageModal(false);
     } catch (error) {
       console.log('onGallery error', error);
     }

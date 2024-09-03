@@ -19,6 +19,8 @@ const ProfilePhoto = ({ navigation }) => {
   const [imageModal, setImageModal] = useState(false);
   const { userType } = useSelector((state) => state.user);
   const isMentor = userType === "mentor";
+  const [profileImage, setProfileImage] = useState("");
+  console.log("profileImage", profileImage);
 
   console.log("isMentor", isMentor);
   return (
@@ -41,18 +43,15 @@ const ProfilePhoto = ({ navigation }) => {
           color={Color.black20}
           marginBottom={20}
         />
-        <View
-          style={{
-            height: 175,
-            width: 175,
-            backgroundColor: Color.yellowPrim,
-            alignSelf: "center",
-            borderRadius: 100,
-            justifyContent: "flex-end",
-            marginBottom: 30,
-          }}
-        >
-          <Image source={images.Shape} style={styles.person} />
+        <View style={{ ...styles.person, marginBottom: 30 }}>
+          <Image
+            source={
+              profileImage?.sourceURL === ""
+                ? images.Shape
+                : { uri: profileImage?.sourceURL }
+            }
+            style={styles.person}
+          />
           <TouchableOpacity
             style={styles.upload}
             activeOpacity={0.8}
@@ -91,7 +90,11 @@ const ProfilePhoto = ({ navigation }) => {
           textDecorationLine={"underline"}
         />
       </View>
-      <UploadPhoto visible={imageModal} setImageModal={setImageModal} />
+      <UploadPhoto
+        visible={imageModal}
+        onChange={setProfileImage}
+        setImageModal={setImageModal}
+      />
     </SafeAreaView>
   );
 };
@@ -108,10 +111,12 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   person: {
-    height: 122,
-    width: 106,
-    resizeMode: "contain",
+    height: 175,
+    width: 175,
+    backgroundColor: Color.yellowPrim,
     alignSelf: "center",
+    borderRadius: 100,
+    justifyContent: "flex-end",
   },
   upload: {
     height: 49,

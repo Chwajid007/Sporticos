@@ -1,16 +1,16 @@
 import React from "react";
-import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Image, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
-import { useIsFocused } from "@react-navigation/native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Color, FontFamily, icons, images } from "../../theme";
 import CustomText from "../CustomText";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/reducer/authSlice";
 
 const CustomDrawer = (props) => {
-  const isFocused = useIsFocused();
-  const { userType } = useSelector((state) => state);
+  const userType  = useSelector((state) => state.user.userType);
   const isMentor = userType === "mentor";
+  const dispatch = useDispatch();
 
   const drawerData = [
     ...(!isMentor
@@ -31,6 +31,16 @@ const CustomDrawer = (props) => {
 
   const closeDrawer = () => {
     props.navigation.closeDrawer();
+  };
+  const logoutFun = () => {
+    Alert.alert("", " Do you want to Sign out?", [
+      {
+        text: "No",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "destructive",
+      },
+      { text: "Yes", onPress: () => dispatch(logout()), style: "default" },
+    ]);
   };
 
   return (
@@ -117,12 +127,7 @@ const CustomDrawer = (props) => {
       </DrawerContentScrollView>
       <TouchableOpacity
         style={styles.signOutButton}
-        onPress={() =>
-          props.navigation.reset({
-            index: 0,
-            routes: [{ name: "AuthSelction" }],
-          })
-        }
+        onPress={logoutFun}
       >
         <MaterialIcons
           name="logout"

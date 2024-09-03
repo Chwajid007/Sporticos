@@ -32,7 +32,7 @@ const CustomDropdownPicker = ({
 }) => {
   const [isOpen, setIsOpen] = useState(open);
   const [select, setSelect] = useState();
-  console.log("select", select);
+ // console.log("select", select);
   // useEffect(() => {
   //   setTimeout(() => {
   //     setSelect(value);

@@ -2,13 +2,16 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Color } from "../../../../theme";
 import CustomText from "../../../../components/CustomText";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../../redux/reducer/authSlice";
 
 const Sessions = () => {
+  const dispatch = useDispatch()
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>My Sessions</Text>
-        <CustomText label={"See all"} />
+        <CustomText label={"See all"} onPress={()=>dispatch(logout())}/>
       </View>
       <View style={styles.content}>
         <Text style={styles.noContent}>No Sessions to show</Text>

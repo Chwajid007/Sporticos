@@ -1,5 +1,17 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { View, StyleSheet, TextInput, Text } from "react-native";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import CustomText from "./CustomText";
 import { getFontSize, useForceUpdate } from "../assets/utils/ResponsiveFn";
@@ -13,6 +25,7 @@ const CustomInput = forwardRef(
       onBlur = () => {},
       onSubmitEditing = () => {},
       onChangeText = () => {},
+      onPressIn = () => {},
       value,
       secureTextEntry,
       placeholderTextColor,
@@ -22,7 +35,6 @@ const CustomInput = forwardRef(
       iconColor,
       errorMessage,
       iconName,
-      editable,
       paddingVertical,
       textContentType,
       blurOnSubmit,
@@ -39,12 +51,11 @@ const CustomInput = forwardRef(
       HeaderLabelSize,
       HeaderLabelColor,
       isError = false,
+      editable = true,
       ...props
     },
     ref
   ) => {
-    console.log('ref',ref?.current?.focusRef)
-
     const [hidePass, setHidePass] = useState(secureTextEntry);
     const textInputRef = useRef();
     const [tempValue, setTempValue] = useState(value);
@@ -84,6 +95,55 @@ const CustomInput = forwardRef(
       }
     }, [isError]);
 
+    if (!editable) {
+      return (
+        <View style={{ marginBottom: marginBottom || 17 }}>
+          <CustomText
+            label={HeaderLabel}
+            marginBottom={HeaderLabelBottom || 5}
+            fontSize={HeaderLabelSize || 16}
+            fontFamily={FontFamily.barlowMedium}
+            color={HeaderLabelColor}
+          />
+          <TouchableOpacity
+            // onLongPress={() => onLongPress()}
+            activeOpacity={0.7}
+            onPress={() => onPressIn()}
+            style={[
+              styles.inputContainer,
+              {
+                width: width || "100%",
+                borderWidth: borderWidth || 1,
+                backgroundColor: backgroundColor || Color.white10,
+                borderColor: errorMessage ? Color.red : Color.greyLight10,
+                height: height || 58,
+                borderRadius: borderRadius || 12,
+              },
+              continerStyle,
+            ]}
+          >
+            <Text
+              style={[
+                {
+                //  flex: 1,
+                 // height: "100%",
+                  borderRadius: 12,
+                  paddingVertical: paddingVertical || 5,
+                  paddingHorizontal: 20,
+                  fontSize: 14,
+                  color: Color.darkGrey,
+                  fontFamily: FontFamily.poppinsRegular,
+                  textAlign: "center",
+                },
+              ]}
+            >
+              {placeholder}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
     return (
       <View style={{ marginBottom: marginBottom || 17 }}>
         <CustomText
@@ -100,7 +160,7 @@ const CustomInput = forwardRef(
               width: width || "100%",
               borderWidth: borderWidth || 1,
               backgroundColor: backgroundColor || Color.white10,
-              borderColor: errorMessage ? Color.error : Color.greyLight10,
+              borderColor: errorMessage ? Color.red : Color.greyLight10,
               height: height || 58,
               borderRadius: borderRadius || 12,
             },
@@ -126,7 +186,7 @@ const CustomInput = forwardRef(
             multiline={multiline}
             placeholder={placeholder}
             textContentType={textContentType}
-            placeholderTextColor={placeholderTextColor || Color.darkGrey}
+            placeholderTextColor={placeholderTextColor || Color.greyLight}
             value={tempValue}
             selectionColor={Color.pink}
             autoCapitalize="none"
@@ -182,6 +242,16 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 12,
     color: "red",
+  },
+  textInput: {
+    flex: 1,
+    height: "100%",
+    borderRadius: 12,
+    //paddingVertical: paddingVertical || 5,
+    paddingHorizontal: 20,
+    fontSize: 14,
+    color: Color.darkGrey,
+    fontFamily: FontFamily.poppinsRegular,
   },
 });
 

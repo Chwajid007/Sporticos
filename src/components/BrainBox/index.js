@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import strings from '../../language';
 
 const BrainBoxx = ({children}) => {
-  const {snackbar, loader} = useSelector(state => state.app);
+  const { loader} = useSelector(state => state.app);
   const dispatch = useDispatch();
 
   return (

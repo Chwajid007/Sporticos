@@ -5,13 +5,43 @@ import { Color, FontFamily } from "../../../theme";
 import CustomText from "../../../components/CustomText";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import CustomButton from "../../../components/CustomButton";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoader } from "../../../redux/reducer/appSliceReducer";
+import { putRequest } from "../../../Api";
+import { routes } from "../../../Api/routes";
+import { BASE_URL } from "../../../Api/constants";
+import SimpleToast from "react-native-simple-toast";
 
-const Otp = ({ navigation }) => {
+const Otp = ({ navigation, route }) => {
   const [fouces, setFouces] = useState(false);
+  const dispatch = useDispatch();
+  const { email, role } = route?.params;
   const [otp, setOtp] = useState("");
+  console.log("otppppp", otp.length);
   useEffect(() => {
     setFouces(true);
   }, []);
+
+  const onNext = async () => {
+    dispatch(setLoader(true));
+    const body = {
+      role: role,
+      email: email,
+      otp: otp,
+    };
+    console.log("body", body);
+    const onSuccess = (res) => {
+      navigation.navigate("ResetPassword", { email: email, role: role });
+      SimpleToast.show(res.message);
+    };
+    if (otp.length === 4) {
+      await putRequest(body, routes.verifyOtp, BASE_URL, onSuccess);
+    } else {
+      dispatch(setLoader(false));
+      SimpleToast.show("Please enter OTP");
+    }
+  };
+
   return (
     <SafeAreaView style={styles.parent}>
       <View style={styles.container}>
@@ -45,7 +75,7 @@ const Otp = ({ navigation }) => {
             }}
           >
             {" "}
-            johnwelles@gmail.com
+            {email}
           </Text>
         </Text>
         <OTPInputView
@@ -58,6 +88,9 @@ const Otp = ({ navigation }) => {
           codeInputFieldStyle={styles.otpInputStyle}
           onCodeChanged={(val) => {
             setOtp(val);
+          }}
+          onCodeFilled={() => {
+            onNext();
           }}
         />
         <CustomText
@@ -74,7 +107,7 @@ const Otp = ({ navigation }) => {
           marginTop={55}
           title={"Reset Password"}
           color={Color?.white}
-          onPress={() => navigation.navigate("Otp")}
+          onPress={() => onNext()}
         />
       </View>
     </SafeAreaView>

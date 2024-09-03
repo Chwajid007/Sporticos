@@ -4,7 +4,6 @@ import { Image, StyleSheet, View, Text, Animated } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { Color, FontFamily, icons } from "../../theme";
-import DrawerScreenWrapper from "../../components/DrawerScreenWrapper";
 import Home from "../../screens/mainStack/Home";
 import Calender from "../../screens/mainStack/Calender";
 import ChatScreen from "../../screens/mainStack/ChatScreen";
@@ -17,6 +16,7 @@ import SessionBooking from "../../screens/mainStack/SessionBooking";
 import CardScreen from "../../screens/mainStack/CardScreen";
 import CustomText from "../../components/CustomText";
 import { useSelector } from "react-redux";
+
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();

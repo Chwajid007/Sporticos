@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Color, FontFamily } from "../../../theme";
 import Header from "./molecules/Header";
 import CustomText from "../../../components/CustomText";
@@ -11,12 +11,16 @@ import CustomInput from "../../../components/CustomInput";
 import CustomDropdownPicker from "../../../components/CustomDropdown";
 import { useSelector } from "react-redux";
 import MentorComp from "./molecules/MentorComp";
+import GeneralStatusBar from "../../../components/GeneralStatusBar";
 
 const Home = ({ navigation }) => {
   const { userType } = useSelector((state) => state.user);
+  const user = useSelector((state)=> state.user.user)
+  console.log('user',user)
   const isMentor = userType === "mentor";
   const [searchVisible, setSearchVisible] = useState(true);
   const [selectedCat, setSelectedCat] = useState(0);
+
   const catgeroyData = [
     {
       id: 8,
@@ -63,7 +67,9 @@ const Home = ({ navigation }) => {
   ];
 
   return (
-    <SafeAreaView style={styles.parent}>
+    <View style={styles.parent}>
+    
+    <GeneralStatusBar/>
       <View style={styles.container}>
         <Header
           search={searchVisible ? true : false}
@@ -194,7 +200,7 @@ const Home = ({ navigation }) => {
           </>
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

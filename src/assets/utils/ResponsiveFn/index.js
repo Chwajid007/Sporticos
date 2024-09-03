@@ -27,3 +27,18 @@ export const useForceUpdate = () => {
   const [, updateState] = React.useState();
   return React.useCallback(() => updateState({}), []);
 }
+
+// Utility function to get the greeting based on the time of day
+export const getTimeBasedGreeting = () => {
+  const currentHour = new Date().getHours();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return "Good Morning";
+  } else if (currentHour >= 12 && currentHour < 17) {
+    return "Good Afternoon";
+  } else if (currentHour >= 17 && currentHour < 21) {
+    return "Good Evening";
+  } else {
+    return "Good Night";
+  }
+};

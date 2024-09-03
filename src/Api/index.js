@@ -23,9 +23,7 @@ const apiCall = async (method, payload, route, baseurl, onSuccess, onError, stop
     try {
         const url = getUrl(route, baseurl);
         let response = null
-        console.log('hiiiii 1')
         const token = getToken();
-        console.log('url',url)
         let config = {
             method: method,
             maxBodyLength: Infinity,
@@ -33,26 +31,24 @@ const apiCall = async (method, payload, route, baseurl, onSuccess, onError, stop
             url: url,
             headers: token ? { 'Authorization': `Bearer ${token}` } : {},
         };
-        console.log('hiiiii 2')
-
         response = await axios.request(config);
-        console.log('response of api',response)
-        if (response?.data?.code == 200) {
+        console.log('response',response)
+        if (response?.status == 200 || response?.status == 201) {
             onSuccess(response.data);
             stopLoader && store.dispatch(setLoader(false));
             return { status: 200, response: response.data };
         } else {
             onError(response);
-            SimpleToast.show(typeof e.response?.data.message == 'string' ? e.response?.data.message : 'Server error');
+            SimpleToast.show(typeof e.response?.errors == 'string' ? e.response?.errors : 'Server error');
             stopLoader && store.dispatch(setLoader(false));
             return response;
         }
     }
     catch (e) {
+        store.dispatch(setLoader(false));
         console.log('e',e)
         SimpleToast.show(typeof e.response?.data.message == 'string' ? e.response?.data.message : 'Server error');
         onError(e.response?.data);
-        store.dispatch(setLoader(false));
         return {
             status: 400,
             response: e?.response?.data ? e?.response?.data : { message: e.toString() },

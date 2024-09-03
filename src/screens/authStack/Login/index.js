@@ -13,7 +13,7 @@ import { setLoader } from "../../../redux/reducer/appSliceReducer";
 import validator from "../../../utils/Validations/validator";
 
 const Login = ({ navigation }) => {
-  const { userType } = useSelector((state) => state.user);
+  const userType = useSelector((state) => state.user.userType);
   const dispatch = useDispatch();
   const [inputs, setInputs] = useState({
     email: "",
@@ -42,11 +42,10 @@ const Login = ({ navigation }) => {
         email: inputs.email,
         password: inputs.password,
       };
-      console.log('body',body)
+      console.log("body", body);
       dispatch(doLogin(body));
     } else {
       dispatch(setLoader(false));
-      console.log("hiiiii");
       setInputs({ ...inputs, emailError, passwordError });
     }
   };
@@ -78,11 +77,8 @@ const Login = ({ navigation }) => {
             });
           }}
           onSubmitEditing={() => {
-            console.log("onSubmitEditing for Email Input");
-
             inputRefs.password.current?.focusRef();
           }}
-          //blurOnSubmit={false}
           errorMessage={inputs.emailError}
           ref={inputRefs.email}
           returnKeyType={"next"}
